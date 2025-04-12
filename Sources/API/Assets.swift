@@ -10,6 +10,7 @@ import Gravity
 @GSExportable
 final class Assets: @unchecked Sendable {
     func loadImage(_ path: String) -> String {
+        print("Load Image", path)
         return path
     }
     

@@ -32,31 +32,28 @@ extension RiftVM: GravityVirtualMachineDelegate {
         return false
     }
     
-    func virtualMachine(_ virtualMachine: Gravity.GravityVirtualMachine, didGetValueFrom target: Gravity.GSValue, forKey: String, vIndex: UInt32) -> Bool {
+    func virtualMachine(_ virtualMachine: GravityVirtualMachine, didGetValueFrom target: GSValue, forKey: String) throws -> GSValue? {
+        return nil
+    }
+    
+    func virtualMachine(_ virtualMachine: Gravity.GravityVirtualMachine, xdata: UnsafeMutableRawPointer?, didSetUndefValue value: Gravity.GSValue, in target: Gravity.GSValue, forKey key: String) -> Bool {
         return false
     }
     
-    func virtualMachine(_ virtualMachine: Gravity.GravityVirtualMachine, didSetUndefValue value: Gravity.GSValue, in target: Gravity.GSValue, forKey key: String) -> Bool {
-        return false
-    }
-    
-    func virtualMachine(_ virtualMachine: Gravity.GravityVirtualMachine, didGetUndefValueFrom target: Gravity.GSValue, forKey: String, vIndex: UInt32) -> Bool {
-        return false
+    func virtualMachine(
+        _ virtualMachine: GravityVirtualMachine,
+        xdata: UnsafeMutableRawPointer?,
+        didGetUndefValueFrom target: GSValue,
+        forKey key: String
+    ) throws -> GSValue? {
+        return nil
     }
     
     func virtualMachine(_ virtualMachine: Gravity.GravityVirtualMachine, didRequestStringWith length: UInt32, data: UnsafeMutableRawPointer?) -> String {
-        return ""
-    }
-    
-    func virtualMachine(_ virtualMachine: Gravity.GravityVirtualMachine, didRequestFree object: Gravity.GSValue) {
-        
-    }
-    
-    func virtualMachine(_ virtualMachine: Gravity.GravityVirtualMachine, didRequestSizeFor object: Gravity.GSValue) -> UInt32 {
-        return 0
-    }
-    
-    func virtualMachine(_ virtualMachine: Gravity.GravityVirtualMachine, didInitObjectIn ctx: Gravity.GSValue, instance: UnsafeMutablePointer<gravity_instance_t>?, arguments: [Gravity.GSValue], argumentsCount: Int16, data: UnsafeMutableRawPointer?) -> Bool {
-        return false
+        guard let data else {
+            return ""
+        }
+        let object = Unmanaged<AnyObject>.fromOpaque(data).takeUnretainedValue()
+        return String(describing: object)
     }
 }

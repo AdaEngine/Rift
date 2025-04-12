@@ -7,7 +7,7 @@
 
 import Gravity
 
-@GSExportable
+@GSExportable("RiftMath")
 final class Math {
     
 }

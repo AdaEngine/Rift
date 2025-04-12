@@ -1,15 +1,17 @@
 import Gravity
 
 let sourceCode = """
-//extern var assets
+extern var rift
+
 var globalVar = 0
 
 func _init() {
-    assets.loadImage("Image.png")
+    rift.assets.loadImage("Image.png")
+    System.print(rift.system.platform)
 }
 
 func _update(delta: Float) {
-    System.print("Vlad")
+    System.print(rift.input.getTouches())
     globalVar += 1
     System.print(globalVar)
 }

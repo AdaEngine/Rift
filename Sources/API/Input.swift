@@ -23,11 +23,21 @@ final class Input: @unchecked Sendable {
     
     /// - Returns: array of touches.
     func getTouches() -> [Touch] {
-        return []
+        return [Touch(position: 0), Touch(position: 1)]
     }
 }
 
 @GSExportable
-struct Touch: @unchecked Sendable {
+final class Touch: @unchecked Sendable {
     let position: Int
+    
+    init(position: Int) {
+        self.position = position
+    }
+}
+
+extension Touch: CustomStringConvertible {
+    var description: String {
+        return "Touch { position: \(position) }"
+    }
 }

@@ -9,14 +9,25 @@ import Gravity
 
 @GSExportable
 final class Rift {
-    let system: System
     
-    init(system: System) {
+    var text: String = "VLAD"
+    
+    let system: System
+    let assets: Assets
+    let input: Input
+    
+    package init(
+        system: System,
+        assets: Assets,
+        input: Input
+    ) {
         self.system = system
+        self.assets = assets
+        self.input = input
     }
 }
 
-@GSExportable
+@GSExportable("RiftSystem")
 final class System {
     let platform: String
     

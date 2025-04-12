@@ -36,30 +36,30 @@ class RiftVM {
     }
     
     func callSetupFunction() {
-        let value = vm.getValue(forKey: "_init")
-        if !value.isClosure {
+        let initFunction = vm.getValue(forKey: "_init")
+        if !initFunction.isClosure {
             fatalError("not callable")
         }
         
-        _ = value(Double.random(in: 0..<10))
+        _ = initFunction()
     }
     
     func update() {
-        let value = vm.getValue(forKey: "_update")
-        if !value.isClosure {
+        let updateFunction = vm.getValue(forKey: "_update")
+        if !updateFunction.isClosure {
             fatalError("not callable")
         }
         
-        _ = value(Double.random(in: 0..<10))
+        _ = updateFunction(Double.random(in: 0..<10))
     }
     
     func draw(_ graphics: Graphics) {
-        let value = vm.getValue(forKey: "_draw")
-        if !value.isClosure {
+        let drawFunction = vm.getValue(forKey: "_draw")
+        if !drawFunction.isClosure {
             fatalError("not callable")
         }
         
-        _ = value(graphics)
+        _ = drawFunction(graphics)
     }
 }
 
@@ -69,16 +69,27 @@ extension RiftVM {
         Input.self,
         Touch.self,
         Math.self,
-        Rift.self,
-//        System.self,
-        Assets.self
+        System.self,
+        Assets.self,
+        Rift.self
     ]
     
     private func setRuntimeObjects() {
-        Self.runtimeAPI.forEach {
-            vm.bindClass(with: $0)
+        do {
+            // First bind all classes
+            try Self.runtimeAPI.forEach {
+                try vm.bindClass(with: $0)
+            }
+        } catch {
+            fatalError("RUNTIME ERROR: \(error.localizedDescription)")
         }
         
-        vm.setValue(Assets(), forKey: "assets")
+        // Then create and set the rift instance
+        let system = System(platform: "macOS")
+        let assets = Assets()
+        let input = Input()
+        let rift = Rift(system: system, assets: assets, input: input)
+        
+        vm.setValue(rift, forKey: "rift")
     }
 }
