@@ -1,0 +1,22 @@
+{
+    "configurations": [
+        {
+            "type": "lldb",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:Rift}",
+            "name": "Debug Rift",
+            "program": "${workspaceFolder:Rift}/.build/debug/Rift",
+            "preLaunchTask": "swift: Build Debug Rift"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:Rift}",
+            "name": "Release Rift",
+            "program": "${workspaceFolder:Rift}/.build/release/Rift",
+            "preLaunchTask": "swift: Build Release Rift"
+        }
+    ]
+}
